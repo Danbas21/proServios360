@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:proservicios/utils/images_carge.dart';
+import 'package:proservicios/pages/banner.dart';
+import 'package:proservicios/pages/footer.dart';
+import 'package:proservicios/pages/mid_bottom_page.dart';
+import 'package:proservicios/pages/mid_page.dart';
+import 'package:proservicios/utils/app_bar.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Carrusel Banner Example')),
+        appBar: BarNaviv(),
         body: HomePage(),
       ),
     );
@@ -17,11 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  final List<String> imgList = [
-    ImagesCarge.pro1,
-    ImagesCarge.pro2,
-    ImagesCarge.pro3,
-  ];
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,60 +30,29 @@ class HomePage extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          SizedBox(
+            height: height / 1.5,
+            child: const WidgetBanner(),
+          ),
           Container(
-            height: height,
-            child: Stack(
-              children: <Widget>[
-                Positioned.fill(
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      height: height,
-                      autoPlay: true,
-                      autoPlayInterval: const Duration(seconds: 3),
-                      enlargeCenterPage: true,
-                      viewportFraction: 1.0,
-                    ),
-                    items: imgList
-                        .map((item) => Container(
-                              child: Center(
-                                child: Image.asset(item,
-                                    fit: BoxFit.fill, width: width),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ),
-                Positioned(
-                  bottom: 10,
-                  left: 10,
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    color: Colors.black54,
-                    child: Text(
-                      'Banner Text',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                ),
-              ],
+            width: width,
+            height: height / 1.8,
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(25, 26, 26, 26),
             ),
-          ),
-          // Aquí puedes agregar más widgets
-          Container(
-            height: 800,
-            color: Colors.blue,
-            child: Center(child: Text('Contenido adicional')),
+            child: const MidPage(),
           ),
           Container(
-            height: 800,
-            color: Colors.green,
-            child: Center(child: Text('Más contenido')),
+            width: width,
+            height: height / 1.8,
+            child: const MidBottom(),
           ),
           Container(
-            height: 800,
-            color: Colors.orange,
-            child: Center(child: Text('Aún más contenido')),
+            height: height / 4,
+            color: Colors.grey[800],
+            child: const Center(child: FooterPage()),
           ),
         ],
       ),

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../utils/images_carge.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 
 class WidgetBanner extends StatelessWidget {
   const WidgetBanner({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imgList = [
+      ImagesCarge.pro1,
+      ImagesCarge.pro2,
+      ImagesCarge.pro3,
+    ];
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
@@ -17,17 +20,29 @@ class WidgetBanner extends StatelessWidget {
 
         return Stack(
           children: [
-            SizedBox(
-              width: width,
-              height: height / 1.8,
-              child: _buildBanner(width, height),
+            Positioned.fill(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: height,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  enlargeCenterPage: true,
+                  viewportFraction: 1.0,
+                ),
+                items: imgList
+                    .map((item) => Center(
+                          child:
+                              Image.asset(item, fit: BoxFit.fill, width: width),
+                        ))
+                    .toList(),
+              ),
             ),
             Positioned(
               top: 0,
               left: 0,
               child: Container(
                 width: width / 2,
-                height: height / 1.8,
+                height: height,
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(200, 26, 26, 26),
                 ),
@@ -99,7 +114,7 @@ class WidgetBanner extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 400,
+              top: 450,
               left: 50,
               child: SizedBox(
                 width: width / 2,
@@ -123,7 +138,7 @@ class WidgetBanner extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(169, 57, 231, 222),
+                    color: const Color.fromARGB(169, 57, 231, 222),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Text(
